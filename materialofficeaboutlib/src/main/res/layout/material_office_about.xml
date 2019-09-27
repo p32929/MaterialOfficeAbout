@@ -9,13 +9,8 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <ProgressBar
-        android:id="@+id/progressbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -73,8 +68,8 @@
                         android:background="@color/divider" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
                         android:id="@+id/linksRv"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
