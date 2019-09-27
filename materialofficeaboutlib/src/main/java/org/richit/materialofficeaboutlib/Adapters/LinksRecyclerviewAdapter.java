@@ -43,21 +43,6 @@ public class LinksRecyclerviewAdapter extends RecyclerView.Adapter<LinksRecycler
     public void onBindViewHolder(@NonNull LinksRecyclerviewAdapter.ViewHolder holder, int position) {
         final Link link= linkArrayList.get(position);
 
-//        Picasso.get().load(member.getImageUrl()).placeholder(R.drawable.ic_face_profile_grey600_48dp).into(holder.imageView);
-//        holder.textViewName.setText("" + member.getName());
-//        holder.textViewPost.setText("" + member.getDesignation());
-//
-//        holder.cardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (member.getContactInfo().isEmpty()) {
-//                    Toast.makeText(context, "" + member.getName() + " has added no contact info", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(member.getContactInfo()));
-//                    context.startActivity(browse);
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -67,18 +52,8 @@ public class LinksRecyclerviewAdapter extends RecyclerView.Adapter<LinksRecycler
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView;
-        TextView textViewName, textViewPost;
-        CardView cardView;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            imageView = itemView.findViewById(R.id.faceImage);
-            textViewName = itemView.findViewById(R.id.nameTv);
-            textViewPost = itemView.findViewById(R.id.postTv);
-
-            cardView = itemView.findViewById(R.id.backcard);
         }
     }
 }

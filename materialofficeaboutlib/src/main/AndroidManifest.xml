@@ -1,5 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.richit.materialofficeaboutlib" >
+    package="org.richit.materialofficeaboutlib">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <activity android:name=".Activities.OfficeAboutActivity"></activity>
+    </application>
 </manifest>

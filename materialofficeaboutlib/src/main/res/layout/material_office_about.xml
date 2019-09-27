@@ -74,6 +74,7 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
+                        android:id="@+id/linksRv"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
@@ -109,7 +110,7 @@
                         android:background="@color/divider" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/officeAboutRecyclerView"
+                        android:id="@+id/membersRv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
