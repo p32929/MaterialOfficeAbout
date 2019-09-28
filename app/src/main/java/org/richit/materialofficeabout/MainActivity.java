@@ -1,9 +1,9 @@
 package org.richit.materialofficeabout;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.richit.materialofficeaboutlib.Others.OfficeAboutHelper;
 
@@ -17,10 +17,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         officeAboutHelper = new OfficeAboutHelper(this, "https://raw.githubusercontent.com/p32929/SomeHowTosAndTexts/master/Office/OfficeInfo.json");
-        officeAboutHelper.showAboutActivity();
+        officeAboutHelper.showAboutActivity(true);
     }
 
     public void showAboutActivity(View view) {
-        officeAboutHelper.showAboutActivity();
+        officeAboutHelper.showAboutActivity(false);
     }
 }
