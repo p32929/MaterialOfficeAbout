@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="ToolbarTheme" parent="">
         <item name="android:windowContentOverlay">@null</item>
         <!--below line used to change the color of home(back) button color-->
         <item name="colorControlNormal">@android:color/white</item>
