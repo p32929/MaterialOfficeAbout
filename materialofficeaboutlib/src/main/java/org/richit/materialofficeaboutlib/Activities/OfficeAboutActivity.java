@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -36,6 +37,7 @@ public class OfficeAboutActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private boolean showToolbar;
     LinearLayout linearLayoutParent;
+    CardView cardViewAbout, cardViewMembers;
     private String jsonUrl;
 
     @Override
@@ -47,6 +49,8 @@ public class OfficeAboutActivity extends AppCompatActivity {
         imageViewOfficeLogo = findViewById(R.id.officeLogoImage);
         swipeRefreshLayout = findViewById(R.id.srl);
         linearLayoutParent = findViewById(R.id.dummyLl);
+        cardViewAbout = findViewById(R.id.aboutCv);
+        cardViewMembers = findViewById(R.id.membersCv);
 
         swipeRefreshLayout.setEnabled(false);
 
@@ -70,9 +74,6 @@ public class OfficeAboutActivity extends AppCompatActivity {
         recyclerViewMembers.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewLinks.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerViewMembers.setAdapter(membersAdapter);
-        recyclerViewLinks.setAdapter(linksAdapter);
-
         swipeRefreshLayout.setRefreshing(true);
         new OfficeAboutLoader(this, jsonUrl, new OfficeAboutListener() {
             @Override
@@ -80,11 +81,20 @@ public class OfficeAboutActivity extends AppCompatActivity {
                 Log.d(TAG, "onJsonDataReceived: ");
 
                 Picasso.get().load(officeInfo.getOfficeLogoUrl()).into(imageViewOfficeLogo);
-                membersAdapter = new MembersRecyclerviewAdapter(OfficeAboutActivity.this, officeInfo.getMembers());
-                linksAdapter = new LinksRecyclerviewAdapter(OfficeAboutActivity.this, officeInfo.getLinks());
 
-                recyclerViewMembers.setAdapter(membersAdapter);
-                recyclerViewLinks.setAdapter(linksAdapter);
+                if (officeInfo.getLinks().size() == 0) {
+                    cardViewAbout.setVisibility(View.GONE);
+                } else {
+                    linksAdapter = new LinksRecyclerviewAdapter(OfficeAboutActivity.this, officeInfo.getLinks());
+                    recyclerViewLinks.setAdapter(linksAdapter);
+                }
+
+                if (officeInfo.getMembers().size() == 0) {
+                    cardViewMembers.setVisibility(View.GONE);
+                } else {
+                    membersAdapter = new MembersRecyclerviewAdapter(OfficeAboutActivity.this, officeInfo.getMembers());
+                    recyclerViewMembers.setAdapter(membersAdapter);
+                }
 
                 swipeRefreshLayout.setRefreshing(false);
 
