@@ -22,9 +22,9 @@ public class OfficeAboutLoader extends AsyncTask<Void, Void, OfficeInfo> {
 
     Context context;
     String jsonUrl;
-    MembersListener listener;
+    OfficeAboutListener listener;
 
-    public OfficeAboutLoader(Context context, String jsonUrl, MembersListener listener) {
+    public OfficeAboutLoader(Context context, String jsonUrl, OfficeAboutListener listener) {
         this.context = context;
         this.jsonUrl = jsonUrl;
         this.listener = listener;

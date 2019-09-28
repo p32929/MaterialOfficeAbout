@@ -21,7 +21,8 @@ import com.squareup.picasso.Picasso;
 import org.richit.materialofficeaboutlib.Adapters.LinksRecyclerviewAdapter;
 import org.richit.materialofficeaboutlib.Adapters.MembersRecyclerviewAdapter;
 import org.richit.materialofficeaboutlib.Models.OfficeInfo;
-import org.richit.materialofficeaboutlib.Others.MembersListener;
+import org.richit.materialofficeaboutlib.Others.OfficeAboutHelper;
+import org.richit.materialofficeaboutlib.Others.OfficeAboutListener;
 import org.richit.materialofficeaboutlib.Others.OfficeAboutLoader;
 import org.richit.materialofficeaboutlib.R;
 
@@ -45,7 +46,7 @@ public class OfficeAboutActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         imageViewOfficeLogo = findViewById(R.id.officeLogoImage);
         swipeRefreshLayout = findViewById(R.id.srl);
-        linearLayoutParent = findViewById(R.id.parentLl);
+        linearLayoutParent = findViewById(R.id.dummyLl);
 
         swipeRefreshLayout.setEnabled(false);
 
@@ -73,7 +74,7 @@ public class OfficeAboutActivity extends AppCompatActivity {
         recyclerViewLinks.setAdapter(linksAdapter);
 
         swipeRefreshLayout.setRefreshing(true);
-        new OfficeAboutLoader(this, jsonUrl, new MembersListener() {
+        new OfficeAboutLoader(this, jsonUrl, new OfficeAboutListener() {
             @Override
             public void onJsonDataReceived(OfficeInfo officeInfo) {
                 Log.d(TAG, "onJsonDataReceived: ");
@@ -86,13 +87,17 @@ public class OfficeAboutActivity extends AppCompatActivity {
                 recyclerViewLinks.setAdapter(linksAdapter);
 
                 swipeRefreshLayout.setRefreshing(false);
+
+                if (OfficeAboutHelper.loadListener != null)
+                    OfficeAboutHelper.loadListener.onLoad(linearLayoutParent);
             }
 
             @Override
             public void onError(String error) {
                 Log.d(TAG, "onError: " + error);
-                Toast.makeText(OfficeAboutActivity.this, "" + error, Toast.LENGTH_SHORT).show();
                 finish();
+
+
             }
         }).execute();
     }
