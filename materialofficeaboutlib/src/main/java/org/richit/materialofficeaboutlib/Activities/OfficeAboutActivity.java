@@ -22,7 +22,6 @@ import org.richit.materialofficeaboutlib.Adapters.LinksRecyclerviewAdapter;
 import org.richit.materialofficeaboutlib.Adapters.MembersRecyclerviewAdapter;
 import org.richit.materialofficeaboutlib.Models.OfficeInfo;
 import org.richit.materialofficeaboutlib.Others.MembersListener;
-import org.richit.materialofficeaboutlib.Others.OfficeAboutHelper;
 import org.richit.materialofficeaboutlib.Others.OfficeAboutLoader;
 import org.richit.materialofficeaboutlib.R;
 
@@ -87,16 +86,12 @@ public class OfficeAboutActivity extends AppCompatActivity {
                 recyclerViewLinks.setAdapter(linksAdapter);
 
                 swipeRefreshLayout.setRefreshing(false);
-
-                if (OfficeAboutHelper.listener != null) {
-                    OfficeAboutHelper.listener.onShow(linearLayoutParent);
-                }
             }
 
             @Override
             public void onError(String error) {
-                Log.d(TAG, "onError: ");
-                Toast.makeText(OfficeAboutActivity.this, "Network error!!!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onError: " + error);
+                Toast.makeText(OfficeAboutActivity.this, "" + error, Toast.LENGTH_SHORT).show();
                 finish();
             }
         }).execute();
