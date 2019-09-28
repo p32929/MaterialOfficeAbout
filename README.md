@@ -35,7 +35,7 @@ OfficeAboutHelper officeAboutHelper = new OfficeAboutHelper(this, "https://raw.g
 ## Show activity:
 You can call ```showAboutActivity()``` or ```showAboutActivity(boolean showToolbar)``` or ```showAboutActivity(boolean showToolbar, LoadListener listener)```
 
-### Example:
+### Show activity example:
 
 ```
 officeAboutHelper.showAboutActivity();
