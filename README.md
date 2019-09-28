@@ -18,7 +18,7 @@ allprojects {
 Add the dependency
 ```
 dependencies {
-
+	        implementation 'com.github.rich-it:MaterialOfficeAbout:1.0.1'
 }
 ```
 
@@ -33,7 +33,15 @@ OfficeAboutHelper officeAboutHelper = new OfficeAboutHelper(this, "https://raw.g
 ```
 
 ## Show activity:
-You can call ```showAboutActivity()``` or ```showAboutActivity(boolean showToolbar)``` or ```showAboutActivity(boolean showToolbar, LoadListener listener)```
+You can call ```showAboutActivity()```
+
+or
+
+```showAboutActivity(boolean showToolbar)```
+
+ or
+
+```showAboutActivity(boolean showToolbar, LoadListener listener)```
 
 ### Show activity example:
 
