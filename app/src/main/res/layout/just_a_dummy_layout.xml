@@ -11,6 +11,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="16dp"
-        android:text="HAHAHA" />
+        android:text="Just a dummy layout" />
 
 </LinearLayout>

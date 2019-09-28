@@ -97,6 +97,10 @@ public class OfficeAboutActivity extends AppCompatActivity {
                 Log.d(TAG, "onError: " + error);
                 finish();
 
+                if (OfficeAboutHelper.loadListener == null)
+                    Toast.makeText(OfficeAboutActivity.this, "" + error, Toast.LENGTH_SHORT).show();
+                else
+                    OfficeAboutHelper.loadListener.onError(error);
 
             }
         }).execute();

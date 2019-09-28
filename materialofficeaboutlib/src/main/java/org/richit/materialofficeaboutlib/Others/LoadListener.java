@@ -4,4 +4,5 @@ import android.widget.LinearLayout;
 
 public interface LoadListener {
     void onLoad(LinearLayout linearLayoutDummy);
+    void onError(String error);
 }

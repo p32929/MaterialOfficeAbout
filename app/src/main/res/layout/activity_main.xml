@@ -5,15 +5,33 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        style="@style/Widget.AppCompat.Button.Borderless"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_margin="32dp"
-        android:background="@color/colorAccent"
-        android:onClick="showAboutActivity"
-        android:text="Show"
-        android:textColor="@android:color/white" />
+        android:orientation="vertical">
+
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            android:background="@color/colorAccent"
+            android:onClick="showAboutActivityNormally"
+            android:text="Show Normally"
+            android:textColor="@android:color/white" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            android:background="@color/colorAccent"
+            android:lines="2"
+            android:onClick="showAboutActivityWithDummyLayout"
+            android:text="Show With\nDummy layout"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
 
 </RelativeLayout>
