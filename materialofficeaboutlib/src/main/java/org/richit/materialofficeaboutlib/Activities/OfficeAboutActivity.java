@@ -33,9 +33,6 @@ public class OfficeAboutActivity extends AppCompatActivity {
     private ImageView imageViewOfficeLogo;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    private ArrayList<Member> members = new ArrayList<>();
-    private ArrayList<Link> links = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
