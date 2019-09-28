@@ -4,11 +4,12 @@ package org.richit.materialofficeaboutlib.Activities;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.squareup.picasso.Picasso;
 
@@ -30,7 +31,7 @@ public class OfficeAboutActivity extends AppCompatActivity {
     private RecyclerView recyclerViewMembers, recyclerViewLinks;
     private RecyclerView.Adapter membersAdapter, linksAdapter;
     private ImageView imageViewOfficeLogo;
-    private NestedScrollView nestedScrollViewParent;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private ArrayList<Member> members = new ArrayList<>();
     private ArrayList<Link> links = new ArrayList<>();
@@ -41,9 +42,8 @@ public class OfficeAboutActivity extends AppCompatActivity {
         setContentView(R.layout.material_office_about);
 
         imageViewOfficeLogo = findViewById(R.id.officeLogoImage);
-
-        nestedScrollViewParent = findViewById(R.id.parentNsv);
-        imageViewOfficeLogo = findViewById(R.id.officeLogoImage);
+        swipeRefreshLayout = findViewById(R.id.srl);
+        swipeRefreshLayout.setEnabled(false);
 
         recyclerViewMembers = findViewById(R.id.membersRv);
         recyclerViewLinks = findViewById(R.id.linksRv);
@@ -54,6 +54,7 @@ public class OfficeAboutActivity extends AppCompatActivity {
         recyclerViewMembers.setAdapter(membersAdapter);
         recyclerViewLinks.setAdapter(linksAdapter);
 
+        swipeRefreshLayout.setRefreshing(true);
         new OfficeAboutLoader(this, "https://raw.githubusercontent.com/p32929/SomeHowTosAndTexts/master/Office/OfficeInfoMaterial.json", new MembersListener() {
             @Override
             public void onJsonDataReceived(OfficeInfo officeInfo) {
@@ -65,11 +66,15 @@ public class OfficeAboutActivity extends AppCompatActivity {
 
                 recyclerViewMembers.setAdapter(membersAdapter);
                 recyclerViewLinks.setAdapter(linksAdapter);
+
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onError(String error) {
                 Log.d(TAG, "onError: ");
+                Toast.makeText(OfficeAboutActivity.this, "Network error!!!", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }).execute();
     }
