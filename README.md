@@ -47,7 +47,7 @@ or
 
 ```
 officeAboutHelper.showAboutActivity();
-``
+```
 
 or
 
