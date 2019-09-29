@@ -69,7 +69,7 @@ officeAboutHelper.showAboutActivity(true, new LoadListener() {
 If you are using Pro Guard add this line:
 
 ```
--keep public class org.richit.materialofficeabout.Models.** { *; }
+-keep public class org.richit.materialofficeaboutlib.Models.** { *; }
 ```
 
 # LICENSE
