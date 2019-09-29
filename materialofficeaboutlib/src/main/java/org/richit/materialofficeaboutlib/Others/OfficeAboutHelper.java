@@ -30,6 +30,14 @@ public class OfficeAboutHelper {
         context.startActivity(intent);
     }
 
+    public void showAboutActivity(LoadListener listener) {
+        loadListener = listener;
+        Intent intent = new Intent(context, OfficeAboutActivity.class);
+        intent.putExtra("jsonUrl", jsonUrl);
+        intent.putExtra("showToolbar", true);
+        context.startActivity(intent);
+    }
+
     public void showAboutActivity() {
         Intent intent = new Intent(context, OfficeAboutActivity.class);
         intent.putExtra("jsonUrl", jsonUrl);

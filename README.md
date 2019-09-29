@@ -18,55 +18,31 @@ allprojects {
 Add the dependency
 ```
 dependencies {
-	        implementation 'com.github.rich-it:MaterialOfficeAbout:1.0.1'
+	        implementation 'com.github.rich-it:MaterialOfficeAbout:1.0.2'
 }
 ```
 
-## How to use:
-1. Initialize
-2. Show activity
+# How to use:
+## 1. Initialize:
+To initialize you can use ```new OfficeAboutHelper(context, jsonUrl)``` like this:
 
-## Usage:
-### Initialization:
 ```
 OfficeAboutHelper officeAboutHelper = new OfficeAboutHelper(this, "https://raw.githubusercontent.com/p32929/SomeHowTosAndTexts/master/Office/OfficeInfoMaterial.json");
 ```
 
-## Show activity:
-You can call ```showAboutActivity()```
+## 2. Show about activity:
+You can show the about activity in 4 ways.
 
-or
+1. ```officeAboutHelper.showAboutActivity();``` // It will show a toolbar by default
+2. ```officeAboutHelper.showAboutActivity(boolean showToolbar);```
+3. ```officeAboutHelper.showAboutActivity(boolean showToolbar, LoadListener listener);```
+4. ```officeAboutHelper.showAboutActivity(LoadListener listener);``` // It will show a toolbar by default
 
-```showAboutActivity(boolean showToolbar)```
+* Tip: If you want to add some more views dynamically, you might wanna use the ```LoadListener listener``` and add the views in ```onLoad(LinearLayout linearLayoutDummy)``` callback.
 
- or
+For more info, check out the app in the repository
 
-```showAboutActivity(boolean showToolbar, LoadListener listener)```
-
-### Show activity example:
-
-```
-officeAboutHelper.showAboutActivity();
-```
-
-or
-
-```
-officeAboutHelper.showAboutActivity(true, new LoadListener() {
-            @Override
-            public void onLoad(LinearLayout linearLayoutDummy) {
-                // You might wanna add some more views below the activity layout
-                linearLayoutDummy.addView(LayoutInflater.from(MainActivity.this).inflate(R.layout.just_a_dummy_layout, null));
-            }
-
-            @Override
-            public void onError(String error) {
-                // You might wanna show a toast here with the error string
-            }
-        });
-```
-
-If you are using Pro Guard add this line:
+And lastly, if you are using Pro Guard add this line(Otherwise, the app will crash):
 
 ```
 -keep public class org.richit.materialofficeaboutlib.Models.** { *; }
