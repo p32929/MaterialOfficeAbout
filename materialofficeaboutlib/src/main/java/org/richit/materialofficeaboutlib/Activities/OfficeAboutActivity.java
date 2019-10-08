@@ -21,11 +21,15 @@ import com.squareup.picasso.Picasso;
 
 import org.richit.materialofficeaboutlib.Adapters.LinksRecyclerviewAdapter;
 import org.richit.materialofficeaboutlib.Adapters.MembersRecyclerviewAdapter;
+import org.richit.materialofficeaboutlib.Models.Member;
 import org.richit.materialofficeaboutlib.Models.OfficeInfo;
 import org.richit.materialofficeaboutlib.Others.OfficeAboutHelper;
 import org.richit.materialofficeaboutlib.Others.OfficeAboutListener;
 import org.richit.materialofficeaboutlib.Others.OfficeAboutLoader;
 import org.richit.materialofficeaboutlib.R;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class OfficeAboutActivity extends AppCompatActivity {
     private String TAG = this.getClass().getSimpleName();
@@ -35,10 +39,15 @@ public class OfficeAboutActivity extends AppCompatActivity {
     private ImageView imageViewOfficeLogo;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Toolbar toolbar;
-    private boolean showToolbar;
     LinearLayout linearLayoutParent;
     CardView cardViewAbout, cardViewMembers;
+
     private String jsonUrl;
+    private boolean showToolbar;
+    private boolean shuffleMembers = false;
+    private String name = "";
+    private String designation = "";
+    private boolean exact = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +65,10 @@ public class OfficeAboutActivity extends AppCompatActivity {
 
         showToolbar = getIntent().getBooleanExtra("showToolbar", false);
         jsonUrl = getIntent().getStringExtra("jsonUrl");
+        shuffleMembers = getIntent().getBooleanExtra("shuffleMembers", false);
+        name = getIntent().getStringExtra("name");
+        designation = getIntent().getStringExtra("designation");
+        exact = getIntent().getBooleanExtra("exact", false);
 
         if (showToolbar) {
             toolbar.setVisibility(View.VISIBLE);
@@ -92,6 +105,7 @@ public class OfficeAboutActivity extends AppCompatActivity {
                 if (officeInfo.getMembers().size() == 0) {
                     cardViewMembers.setVisibility(View.GONE);
                 } else {
+                    checkConditions(officeInfo.getMembers());
                     membersAdapter = new MembersRecyclerviewAdapter(OfficeAboutActivity.this, officeInfo.getMembers());
                     recyclerViewMembers.setAdapter(membersAdapter);
                 }
@@ -123,4 +137,34 @@ public class OfficeAboutActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void checkConditions(ArrayList<Member> memberArrayList) {
+        if (shuffleMembers) {
+            Collections.shuffle(memberArrayList);
+            for (int i = 0; i < memberArrayList.size(); i++) {
+                Member memberTop = null;
+                if (exact) {
+                    if (!name.isEmpty() && memberArrayList.get(i).getName().equals(name)) {
+                        memberTop = memberArrayList.get(i);
+                    } else if (!designation.isEmpty() && memberArrayList.get(i).getDesignation().toLowerCase().equals(designation.toLowerCase())) {
+                        memberTop = memberArrayList.get(i);
+                    }
+                } else {
+                    if (!name.isEmpty() && memberArrayList.get(i).getName().contains(name)) {
+                        memberTop = memberArrayList.get(i);
+                    } else if (!designation.isEmpty() && memberArrayList.get(i).getDesignation().toLowerCase().contains(designation.toLowerCase())) {
+                        memberTop = memberArrayList.get(i);
+                    }
+                }
+
+                if (memberTop != null) {
+                    memberArrayList.remove(i);
+                    memberArrayList.add(0, memberTop);
+                    break;
+                }
+            }
+        }
+    }
+
+
 }
