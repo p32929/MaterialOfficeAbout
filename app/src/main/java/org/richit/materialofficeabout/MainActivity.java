@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showAboutActivityNormally(View view) {
-        officeAboutHelper.shuffleMembersByName("Fayaz", false);
+        officeAboutHelper.shuffleAndBringSomeoneTopByName("Fayaz", false);
         officeAboutHelper.showAboutActivity();
     }
 

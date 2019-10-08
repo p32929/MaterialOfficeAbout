@@ -23,13 +23,13 @@ public class OfficeAboutHelper {
         shuffleMembers = true;
     }
 
-    public void shuffleMembersByName(String name, boolean exact) {
+    public void shuffleAndBringSomeoneTopByName(String name, boolean exact) {
         shuffleMembers = true;
         this.name = name;
         this.exact = exact;
     }
 
-    public void shuffleMembersByDesignation(String designation, boolean exact) {
+    public void shuffleAndBringSomeoneTopByDesignation(String designation, boolean exact) {
         shuffleMembers = true;
         this.designation = designation;
         this.exact = exact;
