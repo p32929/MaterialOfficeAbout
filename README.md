@@ -39,7 +39,7 @@ You can show the about activity in 4 ways.
 4. ```officeAboutHelper.showAboutActivity(LoadListener listener);``` // It will show a toolbar by default
 
 * Tip: If you want to add some more views dynamically, you might wanna use the ```LoadListener listener``` and add the views in ```onLoad(LinearLayout linearLayoutDummy)``` callback.
-
+* Tip: If you want to shuffle the members list but keep someone at the top, you can use ```shuffleAndBringSomeoneTopByName()``` or ```shuffleAndBringSomeoneTopByDesignation()``` methods
 For more info, check out the app in the repository
 
 And lastly, if you are using Pro Guard add this line(Otherwise, the app will crash):
