@@ -18,7 +18,7 @@ allprojects {
 Add the dependency
 ```
 dependencies {
-	        implementation 'com.github.rich-it:MaterialOfficeAbout:1.0.3'
+	        implementation 'com.github.rich-it:MaterialOfficeAbout:1.0.4'
 }
 ```
 
