@@ -43,7 +43,7 @@ public class MembersRecyclerviewAdapter extends RecyclerView.Adapter<MembersRecy
     public void onBindViewHolder(@NonNull MembersRecyclerviewAdapter.ViewHolder holder, int position) {
         final Member member = members.get(position);
 
-        Picasso.get().load(member.getImageUrl()).into(holder.circleImageView);
+        Picasso.get().load(member.getImageUrl()).placeholder(R.drawable.ic_face_profile_grey600_48dp).into(holder.circleImageView);
         holder.textViewName.setText("" + member.getName());
         holder.textViewDesignation.setText("" + member.getDesignation());
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {

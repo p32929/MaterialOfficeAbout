@@ -1,6 +1,10 @@
 package org.richit.materialofficeaboutlib.Activities;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -17,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.richit.materialofficeaboutlib.Adapters.LinksRecyclerviewAdapter;
@@ -49,10 +54,15 @@ public class OfficeAboutActivity extends AppCompatActivity {
     private String designation = "";
     private boolean exact = false;
 
+    SharedPreferences sharedPreferences;
+    String SAVED_JSON = "SAVED_JSON";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.material_office_about);
+        initSP(this);
 
         toolbar = findViewById(R.id.toolbar);
         imageViewOfficeLogo = findViewById(R.id.officeLogoImage);
@@ -87,33 +97,30 @@ public class OfficeAboutActivity extends AppCompatActivity {
         recyclerViewMembers.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewLinks.setLayoutManager(new LinearLayoutManager(this));
 
+        String jsonStr = getString(SAVED_JSON, "");
+        if (jsonStr.isEmpty()) {
+            getDataFromOnline();
+        } else {
+            if (OfficeAboutLoader.isNetworkAvailable(this)) {
+                getDataFromOnline();
+            } else {
+                OfficeInfo officeInfo = new Gson().fromJson(jsonStr, OfficeInfo.class);
+                showCorrectData(officeInfo);
+            }
+        }
+    }
+
+    private void getDataFromOnline() {
         swipeRefreshLayout.setRefreshing(true);
         new OfficeAboutLoader(this, jsonUrl, new OfficeAboutListener() {
+
             @Override
-            public void onJsonDataReceived(OfficeInfo officeInfo) {
-                Log.d(TAG, "onJsonDataReceived: ");
-
-                Picasso.get().load(officeInfo.getOfficeLogoUrl()).into(imageViewOfficeLogo);
-
-                if (officeInfo.getLinks().size() == 0) {
-                    cardViewAbout.setVisibility(View.GONE);
-                } else {
-                    linksAdapter = new LinksRecyclerviewAdapter(OfficeAboutActivity.this, officeInfo.getLinks());
-                    recyclerViewLinks.setAdapter(linksAdapter);
-                }
-
-                if (officeInfo.getMembers().size() == 0) {
-                    cardViewMembers.setVisibility(View.GONE);
-                } else {
-                    checkConditions(officeInfo.getMembers());
-                    membersAdapter = new MembersRecyclerviewAdapter(OfficeAboutActivity.this, officeInfo.getMembers());
-                    recyclerViewMembers.setAdapter(membersAdapter);
-                }
-
-                swipeRefreshLayout.setRefreshing(false);
-
+            public void onJsonDataReceived(OfficeInfo officeInfo, String jsonFromOnline) {
+                showCorrectData(officeInfo);
                 if (OfficeAboutHelper.loadListener != null)
                     OfficeAboutHelper.loadListener.onLoad(linearLayoutParent);
+
+                putSP(SAVED_JSON, jsonFromOnline);
             }
 
             @Override
@@ -166,5 +173,40 @@ public class OfficeAboutActivity extends AppCompatActivity {
         }
     }
 
+    private void initSP(Context context) {
+        if (sharedPreferences == null) {
+            sharedPreferences = context.getSharedPreferences("OfficeAbout", Context.MODE_PRIVATE);
+        }
+    }
 
+    private void putSP(String title, String value) {
+        sharedPreferences.edit().putString(title, value).apply();
+    }
+
+    private String getString(String title, String defaultValue) {
+        return sharedPreferences.getString(title, defaultValue);
+    }
+
+    private void showCorrectData(OfficeInfo officeInfo) {
+        Log.d(TAG, "onJsonDataReceived: ");
+
+        Picasso.get().load(officeInfo.getOfficeLogoUrl()).into(imageViewOfficeLogo);
+
+        if (officeInfo.getLinks().size() == 0) {
+            cardViewAbout.setVisibility(View.GONE);
+        } else {
+            linksAdapter = new LinksRecyclerviewAdapter(OfficeAboutActivity.this, officeInfo.getLinks());
+            recyclerViewLinks.setAdapter(linksAdapter);
+        }
+
+        if (officeInfo.getMembers().size() == 0) {
+            cardViewMembers.setVisibility(View.GONE);
+        } else {
+            checkConditions(officeInfo.getMembers());
+            membersAdapter = new MembersRecyclerviewAdapter(OfficeAboutActivity.this, officeInfo.getMembers());
+            recyclerViewMembers.setAdapter(membersAdapter);
+        }
+
+        swipeRefreshLayout.setRefreshing(false);
+    }
 }

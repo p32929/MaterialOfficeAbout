@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.Charset;
 
-public class OfficeAboutLoader extends AsyncTask<Void, Void, OfficeInfo> {
+public class OfficeAboutLoader extends AsyncTask<Void, Void, String> {
 
     String TAG = getClass().getSimpleName();
 
@@ -47,7 +47,7 @@ public class OfficeAboutLoader extends AsyncTask<Void, Void, OfficeInfo> {
     }
 
     @Override
-    protected OfficeInfo doInBackground(Void... voids) {
+    protected String doInBackground(Void... voids) {
         try {
             URL url = new URL(jsonUrl);
             InputStream is = url.openStream();
@@ -58,8 +58,7 @@ public class OfficeAboutLoader extends AsyncTask<Void, Void, OfficeInfo> {
             while ((cp = bufferedReader.read()) != -1) {
                 sb.append((char) cp);
             }
-            Log.d(TAG, "doInBackground: JSON DATA: " + sb.toString());
-            return new Gson().fromJson(sb.toString(), OfficeInfo.class);
+            return sb.toString();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,17 +68,17 @@ public class OfficeAboutLoader extends AsyncTask<Void, Void, OfficeInfo> {
     }
 
     @Override
-    protected void onPostExecute(OfficeInfo officeInfo) {
-        super.onPostExecute(officeInfo);
-
+    protected void onPostExecute(String jsonString) {
+        super.onPostExecute(jsonString);
+        OfficeInfo officeInfo = new Gson().fromJson(jsonString, OfficeInfo.class);
         if (officeInfo == null) {
             listener.onError("NULL OfficeInfo Object");
         } else {
-            listener.onJsonDataReceived(officeInfo);
+            listener.onJsonDataReceived(officeInfo, jsonString);
         }
     }
 
-    private boolean isNetworkAvailable(Context ctx) {
+    public static boolean isNetworkAvailable(Context ctx) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
