@@ -53,7 +53,7 @@ And lastly, if you are using Pro Guard add this line(Otherwise, the app will cra
 ```
 MIT License
 
-Copyright (c) 2019 rich-it
+Copyright (c) 2019 Fayaz Bin Salam
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
