@@ -35,7 +35,7 @@ allprojects {
 Add the dependency
 ```
 dependencies {
-	        implementation 'com.github.p32929:MaterialOfficeAbout:1.0.5'
+	        implementation 'com.github.p32929:MaterialOfficeAbout:1.0.6'
 }
 ```
 
